@@ -11,10 +11,10 @@ using namespace okapi;
 std::shared_ptr<ChassisController> okapiChassis = ChassisControllerBuilder()
                         .withMotors({11, 16}, {-19, -17})
                         .withGains(
-                            {0.01, 0, 0},
-                            {0.1, 0, 0})
+                            {0.01, 0, 0}, // lateral movement PID
+                            {0.1, 0, 0}) // turning movement PID
                         .withDimensions (okapi::AbstractMotor::gearset::blue, {{4_in, 12_in}, okapi::imev5BlueTPR / 0.6}) // redo this, this is wrong
-                        .build();
+                        .build(); // add encoders when i get the chance
 
 std::shared_ptr<AsyncMotionProfileController> profileController =
     AsyncMotionProfileControllerBuilder()
@@ -23,7 +23,7 @@ std::shared_ptr<AsyncMotionProfileController> profileController =
             1.0, //Maximum linear acceleration
             5.0  //Maximum linear jerk of the chassis
         })
-        .withOutput(okapiChassis)
+        .withOutput(okapiChassis) // output values to chassiscontroller
         .buildMotionProfileController();
 
 

@@ -10,7 +10,7 @@ using namespace okapi;
 ///////////////////////////////////////
 
 void pre_auton() {
-  
+
 }
 
 
@@ -22,7 +22,7 @@ void pre_auton() {
 void test_sTurn()
 {
     profileController->generatePath({{0_ft, 0_ft, 0_deg},
-                                     {5_ft, 5_ft, 0_deg}},
+                                     {5_ft, 5_ft, 90_deg}},
                                     "A");
     profileController->setTarget("A");
     profileController->waitUntilSettled();
