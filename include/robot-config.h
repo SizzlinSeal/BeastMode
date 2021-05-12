@@ -9,8 +9,7 @@
 
 extern std::shared_ptr<okapi::ChassisController> okapiChassis;
 extern std::shared_ptr<okapi::AsyncMotionProfileController> profileController;
-
-
+extern std::shared_ptr<okapi::OdomChassisController> chassis;
 ////////////////////////////////////////////////////////
 // pros constructors
 ////////////////////////

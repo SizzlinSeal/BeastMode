@@ -9,23 +9,33 @@ using namespace okapi;
 
 // define chasis
 std::shared_ptr<ChassisController> okapiChassis = ChassisControllerBuilder()
-                        .withMotors({11, 16}, {-19, -17})
+                        .withMotors({11, 16}, {19, 17})
                         .withGains(
-                            {0.01, 0, 0}, // lateral movement PID
-                            {0.1, 0, 0}) // turning movement PID
+                          {0.1, 0, 0.0001}, // Distance controller gains
+                          {0.1, 0, 0.0001}, // Turn controller gains
+                          {0.1, 0, 0.0001})  // Angle controller gains (helps drive straight)
                         .withDimensions (okapi::AbstractMotor::gearset::blue, {{4_in, 12_in}, okapi::imev5BlueTPR / 0.6}) // redo this, this is wrong
                         .build(); // add encoders when i get the chance
 
 std::shared_ptr<AsyncMotionProfileController> profileController =
     AsyncMotionProfileControllerBuilder()
         .withLimits({
-            1.0, //Maximum linear velocity of the chassis
+            3.0, //Maximum linear velocity of the chassis
             1.0, //Maximum linear acceleration
-            5.0  //Maximum linear jerk of the chassis
+            8.0  //Maximum linear jerk of the chassis
         })
         .withOutput(okapiChassis) // output values to chassiscontroller
         .buildMotionProfileController();
-
+        std::shared_ptr<OdomChassisController> chassis =
+          ChassisControllerBuilder()
+            .withMotors({11, 16}, {19, 17}) // left motor is 1, right motor is 2 (reversed)
+            // green gearset, 4 inch wheel diameter, 11.5 inch wheel track
+            .withDimensions(AbstractMotor::gearset::green, {{4_in, 11.5_in}, imev5GreenTPR})
+            // left encoder in ADI ports A & B, right encoder in ADI ports C & D (reversed)
+            .withSensors(ADIEncoder{'A', 'B'}, ADIEncoder{'C', 'D', true})
+            // specify the tracking wheels diameter (2.75 in), track (7 in), and TPR (360)
+            .withOdometry({{2.75_in, 12_in}, quadEncoderTPR}, StateMode::FRAME_TRANSFORMATION)
+            .buildOdometry();
 
 /////////////////////////////////////////////////////////
 // Pros constructors

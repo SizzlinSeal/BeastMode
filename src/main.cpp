@@ -2,6 +2,7 @@
 #include "autonomous.h"
 #include "opControl.h"
 #include "robot-config.h"
+#include "autoFunctions.h"
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -11,6 +12,8 @@
  */
 void initialize() {
 	opControlActivation = false;
+	enableDrivePID = false;
+	pros::Task autoPID(drivePID);
 }
 
 /**
@@ -20,6 +23,7 @@ void initialize() {
  */
 void disabled() {
 	opControlActivation = false;
+	enableDrivePID = false;
 }
 
 /**
@@ -33,6 +37,7 @@ void disabled() {
  */
 void competition_initialize() {
 	opControlActivation = false;
+	enableDrivePID = false;
 }
 
 /**
@@ -48,7 +53,9 @@ void competition_initialize() {
  */
 void autonomous() {
 	opControlActivation = false;
-	test_sTurn();
+	enableDrivePID = true;
+	//test_sTurn();
+
 }
 
 /**
@@ -66,5 +73,6 @@ void autonomous() {
  */
 void opcontrol() {
 	opControlActivation = true;
+	enableDrivePID = false;
 	opControl();
 }
