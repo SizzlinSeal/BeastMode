@@ -11,9 +11,15 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
+	// set control-period specific variables to false
 	opControlActivation = false;
 	enableDrivePID = false;
+	// tasks to be run
 	pros::Task autoPID(drivePID);
+	pros::Task autoBallDetector(ballDetector);
+
+	// inittialize LLEMU
+	pros::lcd::initialize();
 }
 
 /**
@@ -22,6 +28,7 @@ void initialize() {
  * the robot is enabled, this task will exit.
  */
 void disabled() {
+	// set control-period specific variables to false
 	opControlActivation = false;
 	enableDrivePID = false;
 }
@@ -36,6 +43,7 @@ void disabled() {
  * starts.
  */
 void competition_initialize() {
+	// set control-period specific variables to false
 	opControlActivation = false;
 	enableDrivePID = false;
 }
@@ -51,9 +59,13 @@ void competition_initialize() {
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
+
 void autonomous() {
+	// disable commands from controller
 	opControlActivation = false;
+	// enable PID task
 	enableDrivePID = true;
+	//setPID(false, 1000, 1);
 	//test_sTurn();
 
 }
@@ -72,7 +84,9 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+	// enable opControl functions and threads
 	opControlActivation = true;
+	// disable autonomous PID
 	enableDrivePID = false;
 	opControl();
 }

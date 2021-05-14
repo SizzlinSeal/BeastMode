@@ -1,9 +1,9 @@
 #include "main.h"
 #include "robot-config.h"
+#include "autoFunctions.h"
 
 using namespace pros;
 
-// base control
 // variables
 bool opControlActivation = false; // can be disabled and enabled easily
 
@@ -11,6 +11,7 @@ bool opControlActivation = false; // can be disabled and enabled easily
 // base control functions (arcade contol)
 int baseControl() {
   while (true) {
+    // only run if opControlActivation is true
     if (opControlActivation) {
 
       // configure deadzones
@@ -219,11 +220,29 @@ int buttonR2() {
   return 0;
 }
 
+// button Y
+int buttonY() {
+  // loop forever
+  while (true) {
+    // if button Y is pressed
+    if (Master.get_digital(E_CONTROLLER_DIGITAL_Y)) {
+      // toggle the ballDetection thread
+      ballDetectorToggle = !ballDetectorToggle;
+      // wait until the button is released so the toggle doesnt get spammed
+      waitUntil(!Master.get_digital(E_CONTROLLER_DIGITAL_Y));
+    }
+    // delay so resources dont get wasted
+    delay(10);
+  }
+  return 0;
+}
+
 // create tasks for all the buttons
 void opControl() {
   Task l1(buttonL1); // L1 button
   Task l2(buttonL2); // L2 button
   Task r1(buttonR1); // R1 button
   Task r2(buttonR2); // R2 button
+  Task y(buttonY); // Y button
   Task drivetrainControl(baseControl); // base control
 }

@@ -30,3 +30,5 @@ extern pros::Motor rIntake; // Right intake
 // indexers
 extern pros::Motor bIndexer; // Bottom indexer
 extern pros::Motor tIndexer; // Top indexer
+
+extern pros::Distance lDist; // left distance sensor
