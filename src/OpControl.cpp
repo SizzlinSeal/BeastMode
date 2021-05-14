@@ -7,6 +7,14 @@ using namespace pros;
 // variables
 bool opControlActivation = false; // can be disabled and enabled easily
 
+bool threadSaver() {
+  // if any bumper is pressed, return true, otherwise return false
+  if (Master.get_digital(E_CONTROLLER_DIGITAL_L1) || Master.get_digital(E_CONTROLLER_DIGITAL_L2) || Master.get_digital(E_CONTROLLER_DIGITAL_R1) || Master.get_digital(E_CONTROLLER_DIGITAL_R2)) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 // base control functions (arcade contol)
 int baseControl() {
@@ -125,10 +133,12 @@ int buttonL1() {
       waitUntil(!Master.get_digital(E_CONTROLLER_DIGITAL_L1));
 
       // stop stuff
-      bIndexer.move(0);
-      tIndexer.move(0);
-      lIntake.move(0);
-      rIntake.move(0);
+      if (threadSaver() && !ballDetector()) {
+        bIndexer.move(0);
+        tIndexer.move(0);
+        lIntake.move(0);
+        rIntake.move(0);
+      }
     }
     // a delay so that the brain does not commit suicide
     delay(10);
@@ -156,9 +166,11 @@ int buttonL2() {
       waitUntil(!Master.get_digital(E_CONTROLLER_DIGITAL_L2));
 
       // stop stuff
-      bIndexer.move(0);
-      lIntake.move(0);
-      rIntake.move(0);
+      if (threadSaver() && !ballDetectorToggle) {
+        bIndexer.move(0);
+        lIntake.move(0);
+        rIntake.move(0);
+      }
     }
     // delay so resources arent wasted
     delay(10);
@@ -184,10 +196,12 @@ int buttonR1() {
       waitUntil(!Master.get_digital(E_CONTROLLER_DIGITAL_R1));
 
       // stop stuff
-      bIndexer.move(0);
-      tIndexer.move(0);
-      lIntake.move(0);
-      rIntake.move(0);
+      if (threadSaver() && !ballDetectorToggle) {
+        bIndexer.move(0);
+        tIndexer.move(0);
+        lIntake.move(0);
+        rIntake.move(0);
+      }
     }
     // delay so resources arent wasted
     delay(10);
@@ -211,8 +225,10 @@ int buttonR2() {
       waitUntil(!Master.get_digital(E_CONTROLLER_DIGITAL_R2));
 
       // stop stuff
-      bIndexer.move(0);
-      tIndexer.move(0);
+      if (threadSaver() && !ballDetectorToggle) {
+        bIndexer.move(0);
+        tIndexer.move(0);
+      }
     }
     // delay so resources arent wasted
     delay(10);
