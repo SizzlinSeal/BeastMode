@@ -15,9 +15,9 @@ int baseControl() {
     if (opControlActivation) {
 
       // configure deadzones
-      double strafeDeadzone = 0;
-      double turnDeadzone = 0;
-      double deadzone = 0;
+      double strafeDeadzone = 2;
+      double turnDeadzone = 2;
+      double deadzone = 2;
 
 
       // get lateral and turning variables from controller joystick positions
