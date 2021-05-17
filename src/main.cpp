@@ -3,6 +3,7 @@
 #include "opControl.h"
 #include "robot-config.h"
 #include "autoFunctions.h"
+#include "brainScreen.h"
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -13,13 +14,13 @@
 void initialize() {
 	// set control-period specific variables to false
 	opControlActivation = false;
-	enableDrivePID = false;
-	// tasks to be run
-	pros::Task autoPID(drivePID);
-	pros::Task autoBallDetector(ballDetector);
-
 	// inittialize LLEMU
 	pros::lcd::initialize();
+
+	// tasks to be run
+	pros::Task autoBallDetector(ballDetector);
+	pros::Task lLEMUscreen(brainScreen);
+
 }
 
 /**
@@ -30,7 +31,6 @@ void initialize() {
 void disabled() {
 	// set control-period specific variables to false
 	opControlActivation = false;
-	enableDrivePID = false;
 }
 
 /**
@@ -45,7 +45,6 @@ void disabled() {
 void competition_initialize() {
 	// set control-period specific variables to false
 	opControlActivation = false;
-	enableDrivePID = false;
 }
 
 /**
@@ -64,10 +63,9 @@ void autonomous() {
 	// disable commands from controller
 	opControlActivation = false;
 	// enable PID task
-	enableDrivePID = true;
 	//setPID(false, 1000, 1);
 	//test_sTurn();
-
+	inPerson1();
 }
 
 /**
@@ -87,6 +85,5 @@ void opcontrol() {
 	// enable opControl functions and threads
 	opControlActivation = true;
 	// disable autonomous PID
-	enableDrivePID = false;
 	opControl();
 }

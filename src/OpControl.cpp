@@ -7,15 +7,6 @@ using namespace pros;
 // variables
 bool opControlActivation = false; // can be disabled and enabled easily
 
-bool threadSaver() {
-  // if any bumper is pressed, return true, otherwise return false
-  if (Master.get_digital(E_CONTROLLER_DIGITAL_L1) || Master.get_digital(E_CONTROLLER_DIGITAL_L2) || Master.get_digital(E_CONTROLLER_DIGITAL_R1) || Master.get_digital(E_CONTROLLER_DIGITAL_R2)) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
 // base control functions (arcade contol)
 int baseControl() {
   while (true) {
@@ -133,7 +124,7 @@ int buttonL1() {
       waitUntil(!Master.get_digital(E_CONTROLLER_DIGITAL_L1));
 
       // stop stuff
-      if (threadSaver() && !ballDetector()) {
+      if (!Master.get_digital(E_CONTROLLER_DIGITAL_L2) && !Master.get_digital(E_CONTROLLER_DIGITAL_R1) && !Master.get_digital(E_CONTROLLER_DIGITAL_R2)) {
         bIndexer.move(0);
         tIndexer.move(0);
         lIntake.move(0);
@@ -165,9 +156,10 @@ int buttonL2() {
       // wait until L2 is released
       waitUntil(!Master.get_digital(E_CONTROLLER_DIGITAL_L2));
 
-      // stop stuff
-      if (threadSaver() && !ballDetectorToggle) {
+      if (!Master.get_digital(E_CONTROLLER_DIGITAL_L1) && !Master.get_digital(E_CONTROLLER_DIGITAL_R1) && !Master.get_digital(E_CONTROLLER_DIGITAL_R2)) {
+        // stop stuff
         bIndexer.move(0);
+        tIndexer.move(0);
         lIntake.move(0);
         rIntake.move(0);
       }
@@ -196,7 +188,7 @@ int buttonR1() {
       waitUntil(!Master.get_digital(E_CONTROLLER_DIGITAL_R1));
 
       // stop stuff
-      if (threadSaver() && !ballDetectorToggle) {
+      if (!Master.get_digital(E_CONTROLLER_DIGITAL_L1) && !Master.get_digital(E_CONTROLLER_DIGITAL_L2) && !Master.get_digital(E_CONTROLLER_DIGITAL_R2)) {
         bIndexer.move(0);
         tIndexer.move(0);
         lIntake.move(0);
@@ -225,9 +217,11 @@ int buttonR2() {
       waitUntil(!Master.get_digital(E_CONTROLLER_DIGITAL_R2));
 
       // stop stuff
-      if (threadSaver() && !ballDetectorToggle) {
+      if (!Master.get_digital(E_CONTROLLER_DIGITAL_L1) && !Master.get_digital(E_CONTROLLER_DIGITAL_L2) && !Master.get_digital(E_CONTROLLER_DIGITAL_R1)) {
         bIndexer.move(0);
         tIndexer.move(0);
+        lIntake.move(0);
+        rIntake.move(0);
       }
     }
     // delay so resources arent wasted
@@ -246,6 +240,9 @@ int buttonY() {
       ballDetectorToggle = !ballDetectorToggle;
       // wait until the button is released so the toggle doesnt get spammed
       waitUntil(!Master.get_digital(E_CONTROLLER_DIGITAL_Y));
+      lIntake.move(0);
+      rIntake.move(0);
+      bIndexer.move(0);
     }
     // delay so resources dont get wasted
     delay(10);

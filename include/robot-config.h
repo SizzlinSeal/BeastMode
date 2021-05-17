@@ -31,4 +31,11 @@ extern pros::Motor rIntake; // Right intake
 extern pros::Motor bIndexer; // Bottom indexer
 extern pros::Motor tIndexer; // Top indexer
 
+// tracking wheels
+extern pros::ADIEncoder lTrackingWheel;
+extern pros::ADIEncoder rTrackingWheel;
+extern pros::ADIEncoder mTrackingWheel;
+
+// sensors
 extern pros::Distance lDist; // left distance sensor
+extern pros::Distance rDist; // Right distance sensor
