@@ -43,13 +43,12 @@ std::shared_ptr<AsyncMotionProfileController> profileController =
 
 // controllers
 pros::Controller Master (pros::E_CONTROLLER_MASTER); // master controller
-pros::Controller Partner (pros::E_CONTROLLER_PARTNER); // partner controllers
 
 // drivetrain motors
 pros::Motor LF (11, pros::E_MOTOR_GEARSET_06, true, pros::E_MOTOR_ENCODER_DEGREES); // Left Front Port 11
 pros::Motor LB (16, pros::E_MOTOR_GEARSET_06, true, pros::E_MOTOR_ENCODER_DEGREES); // Left Back Port 16
 pros::Motor RF (19, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_DEGREES); // Right Front Port 19
-pros::Motor RB (9, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_DEGREES); // Right Back Port 9
+pros::Motor RB (9, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_DEGREES); // Right Back Port 17
 
 // intakes
 pros::Motor lIntake (20, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES); // Left intake Port 20
@@ -60,10 +59,10 @@ pros::Motor bIndexer (1, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_
 pros::Motor tIndexer (2, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_DEGREES); // top indexer Port 2
 
 // tracking wheels
-pros::ADIEncoder lTrackingWheel('C', 'D', true); // Left tracking wheel, ports C + D
-pros::ADIEncoder rTrackingWheel('A', 'B', true); // Right tracking wheel, ports A + B
-pros::ADIEncoder mTrackingWheel('E', 'F', false); // Middle tracking wheel, ports E + F
+pros::ADIEncoder lTrackingWheel('C', 'D', true); // Left tracking wheel 
+pros::ADIEncoder rTrackingWheel('A', 'B', true);
+pros::ADIEncoder mTrackingWheel('E', 'F', false);
 
 // sensors
-pros::Distance lDist (6); // left intake distance sensor Port 6
+pros::Distance lDist (6); // left intake distance sensor Port 5
 pros::Distance rDist (5); // Right intake distance sensor Port 5

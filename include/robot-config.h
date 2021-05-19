@@ -16,7 +16,6 @@ extern std::shared_ptr<okapi::OdomChassisController> chassis;
 
 // controllers
 extern pros::Controller Master; // master controller
-extern pros::Controller Partner; // partner controller
 
 // drivetrain motors
 extern pros::Motor LF; // Left front motor
