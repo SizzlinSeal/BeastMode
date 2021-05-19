@@ -48,7 +48,7 @@ pros::Controller Master (pros::E_CONTROLLER_MASTER); // master controller
 pros::Motor LF (11, pros::E_MOTOR_GEARSET_06, true, pros::E_MOTOR_ENCODER_DEGREES); // Left Front Port 11
 pros::Motor LB (16, pros::E_MOTOR_GEARSET_06, true, pros::E_MOTOR_ENCODER_DEGREES); // Left Back Port 16
 pros::Motor RF (19, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_DEGREES); // Right Front Port 19
-pros::Motor RB (17, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_DEGREES); // Right Back Port 17
+pros::Motor RB (9, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_DEGREES); // Right Back Port 17
 
 // intakes
 pros::Motor lIntake (20, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES); // Left intake Port 20
@@ -59,10 +59,10 @@ pros::Motor bIndexer (1, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_
 pros::Motor tIndexer (2, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_DEGREES); // top indexer Port 2
 
 // tracking wheels
-pros::ADIEncoder lTrackingWheel('C', 'D', true);
+pros::ADIEncoder lTrackingWheel('C', 'D', true); // Left tracking wheel 
 pros::ADIEncoder rTrackingWheel('A', 'B', true);
 pros::ADIEncoder mTrackingWheel('E', 'F', false);
 
 // sensors
-pros::Distance lDist (3); // left intake distance sensor Port 5
+pros::Distance lDist (6); // left intake distance sensor Port 5
 pros::Distance rDist (5); // Right intake distance sensor Port 5

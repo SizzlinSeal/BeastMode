@@ -27,7 +27,15 @@ double avgEnc() {
   return (lTrackingWheel.get_value() + rTrackingWheel.get_value())/2;
 }
 
-void ForwardIntakePD(double goal, float KP,float KI,float KD){ // revert for skills
+// variables
+double goal = 0.0;
+float kP = 0.0;
+float kI = 0.0;
+float kD = 0.0;
+
+
+
+int ForwardIntakePD() { // revert for skills
 
   resetEnc(); // resets the Enc
   //Error//
@@ -51,7 +59,7 @@ void ForwardIntakePD(double goal, float KP,float KI,float KD){ // revert for ski
       derivative = error - prevError;
       totalerror += error;
 
-      lateralmotorpower = (error * KP + totalerror * KI + derivative * KD);
+      lateralmotorpower = (error * kP + totalerror * kI + derivative * kD);
 
       LB.move(lateralmotorpower);
       LF.move(lateralmotorpower);
@@ -62,16 +70,24 @@ void ForwardIntakePD(double goal, float KP,float KI,float KD){ // revert for ski
       pros::delay(10);
       }
 
-
   DriveBreak();
+  return 0;
 }
 
+// set PID variables
+void setPID(double goalD, double kPD, double kID, double kDD) {
+  pros::Task pidD(ForwardIntakePD);
+  goal = goalD;
+  kP = kPD;
+  kI = kID;
+  kD = kDD;
+}
 
 
 
 ///////////////////////////////////////////////////////////
 // Ball detection system
-//////////////////////////////////]
+//////////////////////////////////
 
 // variable for ball detection system
 bool ballDetectorToggle = false;
@@ -86,23 +102,23 @@ int ballDetector() {
       if (ballDetectorToggle) {
 
           // print out distance sensor values for debugging
-          pros::lcd::print(0, "Left Dist: %d\n", lDist.get());
+          //pros::lcd::print(0, "Left Dist: %d\n", lDist.get());
 
           // if the ball is in the range
-          if (lDist.get() > 50 && lDist.get() < 170 && !firstTime) {
+          if ((lDist.get() > 50 && lDist.get() < 170 && !firstTime) || (rDist.get() > 50 && rDist.get() < 170 && !firstTime)) {
             // intake balls
             lIntake.move_velocity(200);
             rIntake.move_velocity(200);
             bIndexer.move_velocity(600);
             // wait 1 second
-            pros::delay(1000);
+            pros::delay(1000); // should be replaced by optical sensor, waitUntil its detected in future
             // stop bottom indexer and move intakes to open position
             bIndexer.move(0);
             rIntake.move_velocity(-200);
             lIntake.move_velocity(-200);
 
-            // wait 500 msecs to prevent distance sensors detecting intakes
-            pros::delay(500);
+            // wait until intakes are in the out position
+            waitUntil(lIntake.get_efficiency() < 2 && rIntake.get_efficiency() < 2);
 
           } else {
             // if no balls are in the range, keep intakes in open position

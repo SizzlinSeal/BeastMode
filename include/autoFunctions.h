@@ -2,9 +2,9 @@
 
 #include "main.h"
 
-
 // Main PID functions and variables
-void ForwardIntakePD(double goal, float KP,float KI,float KD);
+// set PID variables
+void setPID(double goalD, double kPD, double kID, double kDD);
 
 // Automatic ball detector functions and variables
 extern bool ballDetectorToggle;
