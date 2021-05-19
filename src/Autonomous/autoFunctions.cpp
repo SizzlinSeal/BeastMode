@@ -94,18 +94,33 @@ bool ballDetectorToggle = false;
 
 // thread that can be toggled during autonomous and driver control that automatically shuts the intakes whenever a ball is detected
 int ballDetector() {
-  // firstTime variable to run code every time this function is disabled and enabled
+
   bool firstTime = true;
 
     while (true) {
+
+      // set variables to save time
+      double lDistance = lDist.get();
+      double rDistance = rDist.get();
+
+      // print distance sensor values to save time
+      pros::lcd::print(3, "Left distance sensor: %d\n", lDistance);
+      pros::lcd::print(4, "Right distance sensor: %d\n", rDistance);
+
+      if (firstTime) {
+        lIntake.move_velocity(-200);
+        rIntake.move_velocity(-200);
+        waitUntil(lIntake.get_efficiency() < 2 && rIntake.get_efficiency() < 2);
+        lDistance = lDist.get();
+        rDistance = rDist.get();
+        firstTime = false;
+      }
+
       // only run loop if it is toggled
       if (ballDetectorToggle) {
 
-          // print out distance sensor values for debugging
-          //pros::lcd::print(0, "Left Dist: %d\n", lDist.get());
-
           // if the ball is in the range
-          if ((lDist.get() > 50 && lDist.get() < 170 && !firstTime) || (rDist.get() > 50 && rDist.get() < 170 && !firstTime)) {
+          if ((lDistance > 50 && lDistance < 170) || (rDistance > 50 && rDistance < 170)) {
             // intake balls
             lIntake.move_velocity(200);
             rIntake.move_velocity(200);
@@ -124,12 +139,11 @@ int ballDetector() {
             // if no balls are in the range, keep intakes in open position
             lIntake.move_velocity(-200);
             rIntake.move_velocity(-200);
-            firstTime = false;
           }
     } else {
-      // set first time variable to true whenever thread gets disabled
-      firstTime = true;
+      firstTime = true; // set the first time to true
     }
+
     // delay so the cpu does not have a stroke
     pros::delay(10);
   }
