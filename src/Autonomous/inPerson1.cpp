@@ -4,5 +4,7 @@
 
 // in-person autonomous #1
 void inPerson1() {
-  setPID(365, 0.5, 0, 0);
+  lateralPID(600, 0.2, 0, 0);
+  pros::delay(500);
+  lateralPID(600, 0.2, 0, 0);
 }
