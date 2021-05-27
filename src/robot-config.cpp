@@ -59,7 +59,7 @@ pros::Motor bIndexer (1, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_
 pros::Motor tIndexer (2, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_DEGREES); // top indexer Port 2
 
 // tracking wheels
-pros::ADIEncoder lTrackingWheel('C', 'D', true); // Left tracking wheel 
+pros::ADIEncoder lTrackingWheel('C', 'D', false); // Left tracking wheel 
 pros::ADIEncoder rTrackingWheel('A', 'B', true);
 pros::ADIEncoder mTrackingWheel('E', 'F', false);
 
