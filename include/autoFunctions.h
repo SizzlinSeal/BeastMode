@@ -2,13 +2,9 @@
 
 #include "main.h"
 
-// Main PID functions and variables
-// forwardPID functions and variables
-void forwardP(double goal, double kP);
-
-// Async P functions and variables
-void asyncLateralP(double goal, double kP);
-extern bool asyncLateralPRunning;
+// Async P with slew functions and variables
+void lateralAsyncPSlewThread(double goal, double kP, double maxMotorChange);
+extern bool asyncLateralPSlewRunning;
 
 // Automatic ball detector functions and variables
 extern bool ballDetectorToggle;
