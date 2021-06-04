@@ -59,10 +59,13 @@ pros::Motor bIndexer (1, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_
 pros::Motor tIndexer (2, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_DEGREES); // top indexer Port 2
 
 // tracking wheels
-pros::ADIEncoder lTrackingWheel('C', 'D', false); // Left tracking wheel 
+pros::ADIEncoder lTrackingWheel('C', 'D', true); // Left tracking wheel
 pros::ADIEncoder rTrackingWheel('A', 'B', true);
 pros::ADIEncoder mTrackingWheel('E', 'F', false);
 
 // sensors
-pros::Distance lDist (6); // left intake distance sensor Port 5
+pros::Distance lDist (6); // left intake distance sensor Port 6
 pros::Distance rDist (5); // Right intake distance sensor Port 5
+pros::Imu imu1 (7); // imu 1 Port 7
+pros::Imu imu2 (10); // imu 2 Port 10
+pros::Imu imu3 (17); // imu 3 port 17

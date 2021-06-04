@@ -39,3 +39,6 @@ extern pros::ADIEncoder mTrackingWheel;
 // sensors
 extern pros::Distance lDist; // left distance sensor
 extern pros::Distance rDist; // Right distance sensor
+extern pros::Imu imu1; // imu 1
+extern pros::Imu imu2; // imu 2
+extern pros::Imu imu3; // imu 3

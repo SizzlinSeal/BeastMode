@@ -21,6 +21,10 @@ void initialize() {
 	pros::Task autoBallDetector(ballDetector);
 	pros::Task lLEMUscreen(brainScreen);
 
+	imu1.reset();
+	imu2.reset();
+	imu3.reset();
+	pros::delay(3000);
 }
 
 /**
